@@ -5,5 +5,14 @@
 
   <h1>Nazdar vole</h1>
 
+{{ range .payload }}
+  <a href="/article/view/{{.ID}}">
+    <h2>{{.Title}}</h2>
+  </a>
+  <p>{{.Content}}</p>
+{{end}}
+
+
 <!--Embed the footer.html template at this location-->
 {{ template "footer.html" .}}
+
