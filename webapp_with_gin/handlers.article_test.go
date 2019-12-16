@@ -10,7 +10,7 @@ import (
 
 func TestShowIndexPageUnauthenticated(t *testing.T) {
 	r := getRouter(true)
-	r.GET("/", func(c *gin.Context) {c.HTML(http.StatusOK, "index.html", gin.H{"title": "Home Page"},)})
+	r.GET("/", showIndexPage)
 
 	// vytvoreni requestu na vyse uvedenou routu
 	req, _ := http.NewRequest("GET", "/", nil)
