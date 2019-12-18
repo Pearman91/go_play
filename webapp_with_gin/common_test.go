@@ -21,7 +21,7 @@ func TestMain(m *testing.M) {
 // fce na vytvoreni routeru pro testy
 func getRouter(withTemplates bool) *gin.Engine {
 	r := gin.Default()
-	if withTempltes {
+	if withTemplates {
 		r.LoadHTTPGlob("templates/*")
 	}
 	return r

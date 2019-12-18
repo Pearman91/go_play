@@ -1,6 +1,6 @@
 package main
 
-//import "encoding/json"
+import "errors"
 
 type article struct {
   ID      int    "json:id"
@@ -15,4 +15,13 @@ var articleList = []article{
 
 func getAllArticles() []article {
   return articleList
+}
+
+func getArticleByID(id int) (*article, error) {
+	for _, a := range articleList {
+		if a.ID == id {
+			return &a, nil
+		}
+	}
+	return nil, errors.New("Article not found")
 }

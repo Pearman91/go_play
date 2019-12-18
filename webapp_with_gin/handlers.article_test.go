@@ -23,3 +23,15 @@ func TestShowIndexPageUnauthenticated(t *testing.T) {
 		return statusOK && pageOK
 	})
 }
+
+func TestArticleUnauthenticated(t *testing.T) {
+	r := getRouter(true)
+	r.GET("article/view/1", getArticle)
+
+	req, _ := http:NewRequest("GET", "/article/view/1", nil)
+	testHTTPResponse(t, r, req, func(w *httptestResponseRecorder) bool {
+		statusOK := w.Code == httpStatus.OK
+		p, err := ioutil.ReadAll(w.Body)
+		pageOK := err == nil && string.Index(string(p), "<title>Prvni clanek</title>") > 0
+	})
+}
