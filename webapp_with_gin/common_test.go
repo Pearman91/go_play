@@ -22,13 +22,13 @@ func TestMain(m *testing.M) {
 func getRouter(withTemplates bool) *gin.Engine {
 	r := gin.Default()
 	if withTemplates {
-		r.LoadHTTPGlob("templates/*")
+		r.LoadHTMLGlob("templates/*")
 	}
 	return r
 }
 
 // fce na zpracovani requestu a otestovani responsu
-func testHTTPResponse(t *testing.T, r *gin.Engine, req *http.Request), f func(w *httptest.ResponseRecorder) bool) {
+func testHTTPResponse(t *testing.T, r *gin.Engine, req *http.Request, f func(w *httptest.ResponseRecorder) bool) {
 	// vytvoreni response recorderu
 	w := httptest.NewRecorder()
 	//vytvoreni servisy a zpracovani requestu
