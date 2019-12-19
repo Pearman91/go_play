@@ -1,0 +1,3 @@
+https://www.sohamkamani.com/blog/2017/09/13/how-to-build-a-web-application-in-golang/
+
+poznamka: projektovy adresar webapp_with_go_and_mux by mel byt lokalni a v src/ by mel byt (vedle ostatnich balicku) adresar github.com/pearman91/webapp_with_go_and_mux
