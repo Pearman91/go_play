@@ -95,17 +95,18 @@ func TestRouteButThereIsNoRoute(t *testing.T) {
 func TestStaticFileServer(t *testing.T) {
 	r := newRouter()
 	mockServer := httptest.NewServer(r)
-	resp, err := http.Get(mockServer.URL + "/assets")
+	resp, err := http.Get(mockServer.URL + "/assets/")
+	// kdyz tu das jen "/assets", tak content-type bude text/plain... a status 404
 
 	if err != nil {t.Fatal(err)}
 
 	if resp.StatusCode != http.StatusOK {
-		t.Errorf("Ma to bejt vcjaku 200 ale vraci to uplnou picovinu: %d", resp.StatusCode)
+		t.Errorf("Ma to bejt vcajku 200 ale vraci to uplnou picovinu: %d", resp.StatusCode)
 	}
 
 	// otestuj content-type header, at je jisto, ze to vraci html
-	contentType := respHandler.Get("Content-Type")
-	expectedContentType := "text/html, charset=uft8"
+	contentType := resp.Header.Get("Content-Type")
+	expectedContentType := "text/html; charset=utf-8"
 
 	if expectedContentType != contentType{
 		t.Errorf("Content type mel byt: %s ale je: %s", expectedContentType, contentType)
