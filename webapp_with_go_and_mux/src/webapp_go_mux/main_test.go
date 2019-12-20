@@ -91,3 +91,23 @@ func TestRouteButThereIsNoRoute(t *testing.T) {
 		t.Errorf("Response mela byt: %s ale je: %s", expected, respString)
 	}
 }
+
+func TestStaticFileServer(t *testing.T) {
+	r := newRouter()
+	mockServer := httptest.NewServer(r)
+	resp, err := http.Get(mockServer.URL + "/assets")
+
+	if err != nil {t.Fatal(err)}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Ma to bejt vcjaku 200 ale vraci to uplnou picovinu: %d", resp.StatusCode)
+	}
+
+	// otestuj content-type header, at je jisto, ze to vraci html
+	contentType := respHandler.Get("Content-Type")
+	expectedContentType := "text/html, charset=uft8"
+
+	if expectedContentType != contentType{
+		t.Errorf("Content type mel byt: %s ale je: %s", expectedContentType, contentType)
+	}
+}
