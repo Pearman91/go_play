@@ -9,15 +9,20 @@ import (
 )
 
 func main() {
+	r := newRouter()
+	http.ListenAndServe(":8080", r)
+	// bez muxu: http.ListenAndServe(":8080", nil)
+	// nil na miste handleru -> je pouzit defaultni DefaultServeMux
+}
+
+// abychom mohli testovat router vne mainu
+func newRouter() *mux.Router {
 	r := mux.NewRouter()
 
 	// pres net/http: http.HandleFunc("/", handler)
 	// ale ux umoznuje definovat metody
 	r.HandleFunc("/hello", handler).Methods("GET")
-
-	http.ListenAndServe(":8080", r)
-	// bez muxu: http.ListenAndServe(":8080", nil)
-	// nil na miste handleru -> je pouzit defaultni DefaultServeMux
+	return r
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {

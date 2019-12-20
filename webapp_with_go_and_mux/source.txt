@@ -1,3 +1,7 @@
 https://www.sohamkamani.com/blog/2017/09/13/how-to-build-a-web-application-in-golang/
+https://www.sohamkamani.com/blog/2017/10/18/golang-adding-database-to-web-application/
+https://cinqict.nl/docker-go-webapp/
+
+
 
 poznamka: projektovy adresar webapp_with_go_and_mux by mel byt lokalni a v src/ by mel byt (vedle ostatnich balicku) adresar github.com/pearman91/webapp_with_go_and_mux

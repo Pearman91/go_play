@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -36,3 +37,36 @@ func TestHandler(t *testing.T) {
 		t.Errorf("handler vratil nahovno body: %v misto %v", actual, expected)
 	}
 }
+
+func estRouter(t *testing.T) {
+	r := newRouter()
+	// rozbehnuti mock serveru
+	mockServer := httptest.NewServer(r)
+	// GEt request na /hello
+	resp, err := http.Get(mockServer.URL + "/hello")
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Status na picu: %d misto aby byl vcajku", resp.StatusCode)
+	}
+
+	// zavri resp, i kdyby se predtim neco posralo
+	defer resp.Body.Close()
+	b, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+	
+	// tet ze body je prazdne
+	respString := string(b)
+	expected := ""
+	if respString != expected {
+		t.Errorf("Response mela byt: %s ale je> %s", expected, respString)
+	}
+}
+
+
