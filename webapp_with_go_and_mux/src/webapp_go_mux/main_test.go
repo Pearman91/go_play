@@ -38,7 +38,7 @@ func TestHandler(t *testing.T) {
 	}
 }
 
-func estRouter(t *testing.T) {
+func TestRouter(t *testing.T) {
 	r := newRouter()
 	// rozbehnuti mock serveru
 	mockServer := httptest.NewServer(r)
@@ -53,20 +53,41 @@ func estRouter(t *testing.T) {
 		t.Errorf("Status na picu: %d misto aby byl vcajku", resp.StatusCode)
 	}
 
-	// zavri resp, i kdyby se predtim neco posralo
+	// zavri resp i kdyby se predtim neco posralo
 	defer resp.Body.Close()
-	b, err := ioutil.ReadAll(resp.Body)
 
+	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		t.Fatal(err)
 	}
 	
 	// tet ze body je prazdne
 	respString := string(b)
-	expected := ""
+	expected := "Nazdar cype!!"
 	if respString != expected {
-		t.Errorf("Response mela byt: %s ale je> %s", expected, respString)
+		t.Errorf("Response mela byt: %s ale je: %s", expected, respString)
 	}
 }
 
+func TestRouteButThereIsNoRoute(t *testing.T) {
+	r := newRouter()
+	mockServer := httptest.NewServer(r)
+	resp, err := http.Post(mockServer.URL + "/hello", "", nil)
 
+	if err != nil {t.Fatal(err)}
+
+	if resp.StatusCode != http.StatusMethodNotAllowed {
+		t.Errorf("Hele ma to vratit status 405 ale vraci to uplnou picovinu: %d", resp.StatusCode)
+	}
+
+	defer resp.Body.Close()
+
+	b, err := ioutil.ReadAll(resp.Body)
+	if err != nil {t.Fatal(err)}
+
+	respString := string(b)
+	expected := ""
+	if respString != expected {
+		t.Errorf("Response mela byt: %s ale je: %s", expected, respString)
+	}
+}
