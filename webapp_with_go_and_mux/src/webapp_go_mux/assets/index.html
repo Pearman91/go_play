@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Rock bands encyclopedia</title>
+</head>
+
+<body>
+  <!--tabulka s kapelyma-->
+  <h1>Rock bands encyclopedia</h1>
+  <table>
+    <tr>
+      <th>Band name</th>
+      <th>Genre</th>
+    <tr>
+    <td>Creedence Clearwater Revival</td>
+    <td>Classical Rock</td>
+    </tr>
+  </table>
+  </br>
+
+  <!--form na 'POST /band' requesty-->
+  <form action="/band" method="post">
+    Band: 
+    <input type="text" name="bandname">
+    <br/> Genre: 
+    <input type="text" name="genre">
+    <br/>
+    <input type="submit" value="Submit">
+  </form>
+
+  <!--skript na fetchnuti seznamu kapel a pridani do tabulky-->
+  <script>
+    bandTable := document.querySelection("table")
+
+   /*fetch API prohlizece sosne JSONy z pres GET na /band*/
+  fetch("/band")
+    .then(response => response.json())
+    .then(bandList => {
+      bandList.forEach(band => {
+        row = document.createElement("tr") //vytvoreni radku tabulky
+
+	// elementy na zaplneni tabulky
+        bandname = document.createElement("td")
+        bandname.innerHTML = band.bandname
+        genre = document.createElement("td")
+        genre.innerHTML = band.genre
+        
+	// pridani elementu do tabulky
+        row.appendChild(bandname)
+        row.appendChild(genre)
+        // pridani radky do tabulky
+        bandTable.appendChild(row)
+      })
+    })
+  </script>
+</body>
