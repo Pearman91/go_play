@@ -31,6 +31,9 @@ func newRouter() *mux.Router {
 	staticFileHandler := http.StripPrefix("/assets/", http.FileServer(staticFileDirectory))
 	r.PathPrefix("/assets/").Handler(staticFileHandler).Methods("GET")	
 
+	r.HandleFunc("/band", getBandHandler).Methods("GET")
+	r.HandleFunc("/band", createBandHandler).Methods("POST")
+
 	return r
 }
 
