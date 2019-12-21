@@ -61,7 +61,7 @@ func TestRouter(t *testing.T) {
 		t.Fatal(err)
 	}
 	
-	// tet ze body je prazdne
+	// test ze body je prazdne
 	respString := string(b)
 	expected := "Nazdar cype!!"
 	if respString != expected {
@@ -69,7 +69,7 @@ func TestRouter(t *testing.T) {
 	}
 }
 
-func TestRouteButThereIsNoRoute(t *testing.T) {
+func TestRouterButThereIsNoRoute(t *testing.T) {
 	r := newRouter()
 	mockServer := httptest.NewServer(r)
 	resp, err := http.Post(mockServer.URL + "/hello", "", nil)

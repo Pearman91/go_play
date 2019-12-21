@@ -28,13 +28,14 @@ func getBandHandler(w http.ResponseWriter, r *http.Request) {
 // post request na band
 func createBandHandler(w http.ResponseWriter, r *http.Request) {
 	band := Band{}  // nova instance kapely
-	if err := r.ParseForm(); err != nil {
+	err := r.ParseForm()
+	if err != nil {
 		fmt.Print(fmt.Errorf("Error: %v", err))
 		w.WriteHeader(http.StatusInternalServerError)  // vrat 500
 		return
 	}
 
-	// vyziskej z formt info o POSTovane kapele a pridej tuto kapelu
+	// vyziskej z formu info o POSTovane kapele a pridej tuto kapelu
 	band.Name = r.Form.Get("bandname")
 	band.Genre = r.Form.Get("genre")
 	bands = append(bands, band)
